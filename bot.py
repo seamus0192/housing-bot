@@ -18,12 +18,16 @@ def connect_bot():
 
     client = discord.Client(intents=intents)
 
+    # @client.event
+    # async def send_notif():
+    #     channel = client.get_channel(1070420022427664396)
+    #     await channel.send('hello')
+
     @client.event
     async def on_ready():
         print(f'{client.user} has connected to Discord!')
 
     client.run(token)
-
 
 def extract_html(url):
     chrome_options = webdriver.ChromeOptions()
@@ -47,12 +51,18 @@ def parse_html(soup):
     num_count = int(listings.find("div").string[0])
     # line finds div attribute that shows how many results there are.
     # craigslist gives recommended listings as well, but I only want actual listings
+    old_df = pd.read_csv(os.getcwd() + "/listings.csv")['Title']
     all_listings = listings.find_all("li")[0:num_count]
+    listing_info = {'Title': [], 'Link': [], 'Price': [], 'Bedrooms': []}
     for listing in all_listings:
-        print(listing)
-
-
-
+        if listing.find('a') not in old_df:
+            send_notif()
+        listing_info['Title'].append(listing.find('a').text)
+        listing_info['Link'].append(listing.find('a')['href'])
+        listing_info['Price'].append(listing.find(class_="priceinfo").text)
+        listing_info['Bedrooms'].append(listing.find(class_="housing-meta").text)
+    df = pd.DataFrame(listing_info)
+    df.to_csv(os.getcwd() + "/listings.csv")
 
 
 if __name__ == '__main__':
