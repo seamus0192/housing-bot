@@ -4,6 +4,7 @@ import discord
 from dotenv import load_dotenv
 from scrape import *
 
+    
 def main(link):
     #looks for .env file where token is stored privately
     load_dotenv()
@@ -23,7 +24,7 @@ def main(link):
         await parse_html(html, client, channel)
         await client.close()
 
-    client.run(token)
+    client.run(token, reconnect=False)
 
 
 if __name__ == '__main__':
