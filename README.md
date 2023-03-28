@@ -1,4 +1,4 @@
-# discord_craigslist_web_scape
+# SLO-Housing-Bot
 
 The main purpose of this bot is to track rental listing in the neighborhood around Cal Poly SLO. It is generally very difficult for students to find houses, as the market is very competitive, so having listings notified pretty immediately after they are listed could help those who are frustrated with housing.
 
