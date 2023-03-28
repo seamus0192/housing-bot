@@ -32,7 +32,7 @@ def extract_html(url):
 # function takes a client object, a soup object and an int to access 
 # the channel where message is to be sent (if conditions met)
 
-async def parse_html(soup, client, channel):
+async def parse_craigslist(soup, client, channel):
     listings = soup.ol.extract()
     num_count = int(listings.find("div").string[0])
     
